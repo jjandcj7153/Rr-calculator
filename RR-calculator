@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>R&R Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>R&R Calculator</h1>
+
+  <label for="buyPrice">Buy Price ($):</label>
+  <input type="number" id="buyPrice" step="0.01">
+
+  <label for="stopLoss">Stop-Loss Price ($):</label>
+  <input type="number" id="stopLoss" step="0.01">
+
+  <button onclick="calculateTakeProfit()">Calculate Take-Profit</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function calculateTakeProfit() {
+      const buy = parseFloat(document.getElementById("buyPrice").value);
+      const stop = parseFloat(document.getElementById("stopLoss").value);
+
+      if (isNaN(buy) || isNaN(stop)) {
+        document.getElementById("result").innerText = "Please enter valid numbers.";
+        return;
+      }
+
+      const risk = Math.abs(buy - stop);
+      const takeProfit = buy + (buy > stop ? 2 * risk : -2 * risk);
+
+      document.getElementById("result").innerText =
+        "Your 2:1 Take-Profit target: $" + takeProfit.toFixed(2);
+    }
+  </script>
+
+</body>
+</html>
